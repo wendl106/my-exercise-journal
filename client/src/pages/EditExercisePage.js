@@ -13,7 +13,7 @@ export const EditExercisePage = ({ exerciseToEdit }) => {
 
     const editExercise = async () => {
         const editedExercise = {name, reps, weight, unit, date}
-        const response = await fetch(`/exercises/${exerciseToEdit._id}`, {
+        const response = await fetch(`https://myexercisejournal.herokuapp.com/exercises/${exerciseToEdit._id}`, {
             method: 'PUT',
             body: JSON.stringify(editedExercise),
             headers: {
@@ -25,7 +25,7 @@ export const EditExercisePage = ({ exerciseToEdit }) => {
         } else {
             alert("The update failed :(")
         };
-        navigate.push('/')
+        navigate.push('https://myexercisejournal.herokuapp.com/')
     };
 
     return (
