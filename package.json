@@ -1,0 +1,27 @@
+{
+  "name": "exercise-journal-rest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "exercises_controller.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node exercises_controller.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wendl106/exercise-journal-rest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wendl106/exercise-journal-rest/issues"
+  },
+  "homepage": "https://github.com/wendl106/exercise-journal-rest#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  }
+}
