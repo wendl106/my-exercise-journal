@@ -25,6 +25,11 @@ const exerciseSchema = mongoose.Schema({
     date: { type: String, required: true }
 });
 
+const userSchema = mongoose.Schema({
+    email: { type: String, required: [true, "Email Required"], unique: [true, "Email Already in Use"] },
+    password: { type: String, required: [true, "Password Required"] }
+});
+
 /**
  * Compile the model from the exercise Schema
  */

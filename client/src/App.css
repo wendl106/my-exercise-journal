@@ -1,38 +1,81 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(223, 225, 255);
+  color: darkblue;
+  margin: 2px;
+  padding: 2px;
+}
+
+input {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button {
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+table {
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+footer {
+  margin-bottom: 10px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+.App-navbar {
+  text-align: left;
+
+}
+
+.App-content {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+tr:nth-child(odd){background-color: dimgrey;}
+
+tr:nth-child(even){background-color: darkgreen;}
+
+tr:hover {background-color: mediumaquamarine;}
+
+tr td {
+  border: 1px solid;
+  padding: 5px;
+  color: cornsilk;
 }
+
+tr th {
+  padding: 10px;
+  text-align: center;
+  background-color: mediumaquamarine;
+  color: cornsilk;
+  border: 1px solid;
+}
+
+ol {
+  list-style: none;
+  display: inline-block;
+  text-align: left;
+}
+
