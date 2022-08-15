@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 
-module.exports = async (request, response, next) => {
+const auth = async (request, response, next) => {
     try {
       //   get the token from the authorization header
       const token = await req.headers.authorization.split(" ")[1];
@@ -23,3 +23,5 @@ module.exports = async (request, response, next) => {
       });
     }
   };
+
+export { auth }

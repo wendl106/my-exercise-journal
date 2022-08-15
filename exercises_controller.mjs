@@ -5,7 +5,7 @@ import validator from 'express-validator';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
-import * as auth from './authorization.mjs';
+import auth from './authorization.mjs';
 
 const app = express();
 
