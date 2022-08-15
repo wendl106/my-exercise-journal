@@ -30,6 +30,19 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: [true, "Password Required"] }
 });
 
+const User = mongoose.model("User", userSchema);
+
+// create user
+const createUser = async (email, password) => {
+    const user = new User({email: email, password: password});
+    return user.save();
+};
+
+const findUserByEmail = async (email) => {
+    const query = User.findOne({ email: email });
+    return query.exec();
+};
+
 /**
  * Compile the model from the exercise Schema
  */
@@ -67,4 +80,4 @@ const deleteById = async (_id) => {
 };
 
 
-export { createExercise, findExerciseById, findExercises, replaceExercise, deleteById }
+export { createUser, findUserByEmail, createExercise, findExerciseById, findExercises, replaceExercise, deleteById }

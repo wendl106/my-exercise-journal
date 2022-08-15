@@ -3,6 +3,9 @@ import * as exercises from './exercises_model.mjs';
 import express from 'express';
 import validator from 'express-validator';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
+import jsonwebtoken from 'jsonwebtoken';
+import * as auth from './authorization.mjs';
 
 const app = express();
 
@@ -11,8 +14,60 @@ app.use(express.json());
 
 const { body, validationResult } = validator
 
-app.get('/greeting', (req, res) => {
-    res.json({ greeting: 'Hello' })
+app.get('/greetings', auth, (req, res) => {
+    res.status(201).json({ Message: "Hello There"})
+})
+
+app.post('/register', (req, res) => {
+    bcrypt.hash(req.body.password, 10)
+        .then(hashedPassword => {
+            exercises.createUser(req.body.email, hashedPassword)
+            .then(user => {
+                res.status(201).json(user);
+            })
+            .catch(error => {
+                console.error(error);
+                res.status(500).json({ Error: 'Internal server error' });
+            })
+        })
+        .catch(error => {
+            res.status(500).json({ Error: 'Internal server error' });
+        });
+})
+
+app.post('/login', (req, res) => {
+    exercises.findUserByEmail(req.body.email)
+        .then(user => {
+            if (user !== null) {
+                bcrypt.compare(req.body.password, user.password)
+                    .then(compareResult => {
+                        if (!compareResult) {
+                            res.status(400).json({ Error: 'Password is incorrect' });
+                        }
+                        const token = jsonwebtoken.sign(
+                            {
+                              userId: user._id,
+                              userEmail: user.email,
+                            },
+                            "RANDOM-TOKEN",
+                            { expiresIn: "24h" }
+                        );
+                        res.status(200).send({
+                            message: "Login Success",
+                            email: user.email,
+                            token,
+                          })
+                    })
+                    .catch(error => {
+                        res.status(500).json({ Error: 'Internal server error' });
+                    })
+            } else {
+                res.status(404).json({ Error: 'Not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ Error: 'Internal server error' });
+        });
 })
 
 
