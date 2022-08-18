@@ -11,7 +11,7 @@ const Register = () => {
     // const Auth = async (e) => {
     //     e.preventDefault();
     //     try {
-    //         await axios.post('/register', {
+    //         await axios.post('https://myexercisejournal.herokuapp.com/register', {
     //             email: email,
     //             password: password
     //         });

@@ -12,7 +12,7 @@ const Login = () => {
     const Auth = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/login', {
+            await axios.post('https://myexercisejournal.herokuapp.com/login', {
                 email: email,
                 password: password
             })

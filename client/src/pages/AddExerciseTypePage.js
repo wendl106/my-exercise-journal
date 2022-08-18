@@ -10,14 +10,14 @@ export const AddExerciseTypePage = () => {
     const navigate = useNavigate();
 
     const loadExerciseTypes = async () => {
-        const response = await fetch('/exercise-types');
+        const response = await fetch('https://myexercisejournal.herokuapp.com/exercise-types');
         const data = await response.json();
         setExerciseTypes(data)
     }
 
     const addExerciseType = async () => {
         const newExerciseType = {name}
-        const response = await fetch('/exercise-types', {
+        const response = await fetch('https://myexercisejournal.herokuapp.com/exercise-types', {
             method: 'POST',
             body: JSON.stringify(newExerciseType),
             headers: {
@@ -34,7 +34,7 @@ export const AddExerciseTypePage = () => {
     };
 
     const onDelete = async _id => {
-        const response = await fetch(`/exercise-types/${_id}`, { method: "DELETE" });
+        const response = await fetch(`https://myexercisejournal.herokuapp.com/exercise-types/${_id}`, { method: "DELETE" });
         // HTTP status of 204 is successful deletion
         if (response.status === 204) {
             const newExerciseTypes = exerciseTypes.filter(e => e._id !== _id);

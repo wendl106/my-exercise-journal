@@ -18,7 +18,7 @@ export const EditExercisePage = ({ exerciseToEdit }) => {
 
     const editExercise = async () => {
         const editedExercise = {name, sets, reps, weight, unit, date, comment}
-        const response = await fetch(`/exercises/${exerciseToEdit._id}`, {
+        const response = await fetch(`https://myexercisejournal.herokuapp.com/exercises/${exerciseToEdit._id}`, {
             method: 'PUT',
             body: JSON.stringify(editedExercise),
             headers: {
@@ -34,7 +34,7 @@ export const EditExercisePage = ({ exerciseToEdit }) => {
     };
     
     const loadExerciseTypes = async () => {
-        const response = await fetch('/exercise-types');
+        const response = await fetch('https://myexercisejournal.herokuapp.com/exercise-types');
         const data = await response.json();
         setExerciseType(data)
     }
