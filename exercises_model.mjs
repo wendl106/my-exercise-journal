@@ -19,16 +19,36 @@ db.once("open", () => {
  */
 const exerciseSchema = mongoose.Schema({
     name: { type: String, required: true },
+    sets: { type: Number, required: true },
     reps: { type: Number, required: true },
     weight: { type: Number, required: true },
     unit: { type: String, required: true },
-    date: { type: String, required: true }
+    date: { type: String, required: true },
+    comment: { type: String }
 });
 
 const userSchema = mongoose.Schema({
     email: { type: String, required: [true, "Email Required"], unique: [true, "Email Already in Use"] },
     password: { type: String, required: [true, "Password Required"] }
 });
+
+const exerciseTypeSchema = mongoose.Schema({
+    name: { type: String, required: true },
+});
+
+const ExerciseType = mongoose.model("ExerciseType", exerciseTypeSchema);
+
+// create exercise function
+const createExerciseType = async (name) => {
+    const exerciseType = new ExerciseType({name: name});
+    return exerciseType.save();
+};
+
+// find all exercises meeting the input filter conditions
+const findExerciseTypes = async (filter) => {
+    const query = ExerciseType.find(filter);
+    return query.exec();
+};
 
 const User = mongoose.model("User", userSchema);
 
@@ -50,8 +70,8 @@ const Exercise = mongoose.model("Exercise", exerciseSchema);
 
 
 // create exercise function
-const createExercise = async (name, reps, weight, unit, date) => {
-    const exercise = new Exercise({name: name, reps: reps, weight: weight, unit: unit, date: date});
+const createExercise = async (name, sets, reps, weight, unit, date, comment) => {
+    const exercise = new Exercise({name: name, sets: sets, reps: reps, weight: weight, unit: unit, date: date, comment: comment});
     return exercise.save();
 };
 
@@ -68,8 +88,8 @@ const findExercises = async (filter) => {
 };
 
 // call updateOne method to modify an exercise
-const replaceExercise = async (_id, name, reps, weight, unit, date) => {
-    const result = await Exercise.updateOne({ _id: _id }, { name: name, reps: reps, weight: weight, unit: unit, date: date });
+const replaceExercise = async (_id, name, sets, reps, weight, unit, date, comment) => {
+    const result = await Exercise.updateOne({ _id: _id }, { name: name, sets: sets, reps: reps, weight: weight, unit: unit, date: date, comment: comment });
     return result;
 };
 
@@ -79,5 +99,10 @@ const deleteById = async (_id) => {
     return result.deletedCount;
 };
 
+const deleteExerciseTypeById = async (_id) => {
+    const result = await ExerciseType.deleteOne({ _id: _id })
+    return result.deletedCount;
+};
 
-export { createUser, findUserByEmail, createExercise, findExerciseById, findExercises, replaceExercise, deleteById }
+
+export { createUser, findUserByEmail, createExerciseType, findExerciseTypes, deleteExerciseTypeById, createExercise, findExerciseById, findExercises, replaceExercise, deleteById }

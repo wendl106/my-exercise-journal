@@ -4,7 +4,13 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AddExercisePage from './pages/AddExercisePage';
 import EditExercisePage from './pages/EditExercisePage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AddExerciseTypePage from './pages/AddExerciseTypePage';
 import { useState } from 'react';
+import RouteGuard from "./components/RouteGuard"
+import LoggedInRouteGuard from './components/LoggedInRouteGuard';
+import About from './pages/About';
 
 function App() {
 
@@ -13,38 +19,59 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <div className="App-navbar">
-          <nav>
-            <ol>
-              <li><Link to="/">Homepage</Link></li>
-              <li><Link to="/add-exercise">Create Exercise</Link></li>
-            </ol>
-          </nav>
-        </div>
         <div className="App-header">
           <header>
-            <h1>
-              Welcome to my Exercise Tracking Application
-            </h1>
-            <p>
-              Hello there! This is a Single Page Application (SPA) utilizing the powerful MERN stack.
-            </p>
-            <ol>
-              <li><b>M</b>ongoDB is used as the database.</li>
-              <li><b>E</b>xpress is used as the web application framework.</li>
-              <li><b>R</b>est is used as the frontend client-side Javascript framework</li>
-              <li><b>N</b>ode is used as the Javascript web server.</li>
-            </ol>
+            <h1>My Exercise Journal</h1>
           </header>
+        </div>
+        <div className="App-navbar">
+          <div className="nav-item"><Link to="/"> Homepage </Link></div>
+          <div className="nav-item"><Link to="/add-exercise"> Add Journal Entry </Link></div>
+          <div className="nav-item"><Link to="/add-exercise-type"> Add New Exercise Type </Link></div>
+          <div className="nav-item"><Link to="/login"> Login </Link></div>
+          <div className="nav-item"><Link to="/register"> Register </Link></div>
+          <div className="nav-item"><Link to="/about"> About </Link></div>
         </div>
         <div className="App-content">
           <Routes>
-            <Route path="/" exact element={<HomePage setExerciseToEdit={ setExerciseToEdit } />}>
-            </Route>
-            <Route path="/add-exercise" element={<AddExercisePage />}>
-            </Route>
-            <Route path="/edit-exercise" element={<EditExercisePage exerciseToEdit={exerciseToEdit} />}>
-            </Route>
+            <Route path="/" exact element={
+              <RouteGuard>
+                <HomePage setExerciseToEdit={ setExerciseToEdit } />
+              </RouteGuard>
+              }
+            />
+            <Route path="/add-exercise" element={
+              <RouteGuard>
+                <AddExercisePage />
+              </RouteGuard>
+              }
+            />
+            <Route path="/edit-exercise" element={
+              <RouteGuard>
+                <EditExercisePage exerciseToEdit={exerciseToEdit} />
+              </RouteGuard>
+              }
+            />
+            <Route path="/add-exercise-type" element={
+              <RouteGuard>
+                <AddExerciseTypePage />
+              </RouteGuard>
+              }
+            />
+            <Route path="/login" element={
+              <LoggedInRouteGuard>
+                <Login />
+              </LoggedInRouteGuard>
+              }
+            />
+            <Route path="/register" element={
+            <LoggedInRouteGuard>
+              <Register />
+            </LoggedInRouteGuard>
+              }
+            />
+            <Route path="/about" element={<About />}
+            />
           </Routes>
         </div>
       

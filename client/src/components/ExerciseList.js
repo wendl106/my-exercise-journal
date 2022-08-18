@@ -7,10 +7,12 @@ function ExerciseList({ exercises, onDelete, onEdit }) {
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Sets</th>
                     <th>Reps</th>
                     <th>Weight</th>
                     <th>Unit</th>
                     <th>Date</th>
+                    <th>Comment</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>

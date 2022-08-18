@@ -6,11 +6,14 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import auth from './authorization.mjs';
+import flash from 'express-flash';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(flash())
+
 
 const { body, validationResult } = validator
 
@@ -27,6 +30,10 @@ app.post('/register', (req, res) => {
             })
             .catch(error => {
                 console.error(error);
+                if (error.code === 11000) {
+                    res.status(303).json({ Error: 'User already exists' });
+                    return
+                }
                 res.status(500).json({ Error: 'Internal server error' });
             })
         })
@@ -78,16 +85,17 @@ app.post('/login', (req, res) => {
  app.post(
     '/exercises',
     body('name').notEmpty(),
+    body('sets').notEmpty().isInt({ min: 1 }),
     body('reps').notEmpty().isInt({ min: 1 }),
     body('weight').notEmpty().isInt({ min: 1 }),
     body('unit').notEmpty().isIn(['lbs', 'kgs']),
-    body('date').notEmpty().matches(/^\d\d-\d\d-\d\d$/),
+    body('date').notEmpty(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ Error: "Invalid request" });
         }
-        exercises.createExercise(req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
+        exercises.createExercise(req.body.name, req.body.sets, req.body.reps, req.body.weight, req.body.unit, req.body.date, req.body.comment)
             .then(exercise => {
                 res.status(201).json(exercise);
             })
@@ -132,26 +140,64 @@ app.get('/exercises', (req, res) => {
 });
 
 /**
+ * Retrieve exercises
+ */
+ app.get('/exercise-types', (req, res) => {
+    exercises.findExerciseTypes({}, '', 0)
+        .then(exerciseTypes => {
+            res.status(200).send(exerciseTypes);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send({ Error: 'Internal server error' });
+        })
+});
+
+/**
+ * Create a new exercise
+ * express validator is used to validate the request
+ */
+ app.post(
+    '/exercise-types',
+    body('name').notEmpty(),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ Error: "Invalid request" });
+        }
+        exercises.createExerciseType(req.body.name)
+            .then(exerciseType => {
+                res.status(201).json(exerciseType);
+            })
+            .catch(error => {
+                console.error(error);
+                res.status(500).json({ Error: 'Internal server error' });
+            })
+    }
+);
+
+/**
  * Update the exercise whose id is provided in the path parameter and set
  * its parameters to the values provided in the body after validating with express validator
  */
 app.put(
     '/exercises/:_id',
     body('name').notEmpty(),
+    body('sets').notEmpty().isInt({ min: 1 }),
     body('reps').notEmpty().isInt({ min: 1 }),
     body('weight').notEmpty().isInt({ min: 1 }),
     body('unit').notEmpty().isIn(['lbs', 'kgs']),
-    body('date').notEmpty().matches(/^\d\d-\d\d-\d\d$/),
+    body('date').notEmpty(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ Error: "Invalid request" });
         }
 
-        exercises.replaceExercise(req.params._id, req.body.name, req.body.reps, req.body.weight, req.body.unit, req.body.date)
+        exercises.replaceExercise(req.params._id, req.body.name, req.body.sets, req.body.reps, req.body.weight, req.body.unit, req.body.date, req.body.comment)
             .then( replaceResult => {
                 if (replaceResult.matchedCount === 1) {
-                    res.status(200).json({ _id: req.params._id, name: req.body.name, reps: req.body.reps, weight: req.body.weight, unit: req.body.unit, date: req.body.date })
+                    res.status(200).json({ _id: req.params._id, name: req.body.name, sets: req.body.sets, reps: req.body.reps, weight: req.body.weight, unit: req.body.unit, date: req.body.date, comment: req.body.comment })
                 } else {
                     res.status(404).json({ Error: "Not found" })
                 }
@@ -167,6 +213,21 @@ app.put(
  */
 app.delete('/exercises/:_id', (req, res) => {
     exercises.deleteById(req.params._id)
+        .then(deletedCount => {
+            if (deletedCount === 1) {
+                res.status(204).send();
+            } else {
+                res.status(404).json({ Error: 'Not found' });
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).json({ Error: 'Internal server error' });
+        })
+});
+
+app.delete('/exercise-types/:_id', (req, res) => {
+    exercises.deleteExerciseTypeById(req.params._id)
         .then(deletedCount => {
             if (deletedCount === 1) {
                 res.status(204).send();
