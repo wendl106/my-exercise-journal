@@ -28,7 +28,7 @@ Currently the production build of this project can be accessed by visiting https
 # Issues
 - There is some issue with the React webpack compatibility that causes react to not be happy on startup unless SKIP_PREFLIGHT_CHECK is true.
 - Only integers are accepted by the backend for the weight input even though the HTML form allows for decimal input.
-- New user creation is not supported at this time as the database is currently not set upt to handle mutliple users. I plan to fix this at some point in the future.
+- New user creation is not supported at this time as the database is currently not set upt to handle multiple users. I plan to fix this at some point in the future.
 
 # Overview of Usage
 
