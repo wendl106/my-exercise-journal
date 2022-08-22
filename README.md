@@ -1,5 +1,5 @@
 # my-exercise-journal
-This is an webapp that I made to allow me to personally track my exercise progress on the go no matter where I am.
+This is an webapp that I made to allow me to personally track my exercise progress on the go no matter where I am. The static frontend is hosted on Netlify and the backend is hosted on Heroku.
 
 # Access
 Currently the production build of this project can be accessed by visiting https://wendl106-makes-great-sites.netlify.app/ although you won't be able to login.
