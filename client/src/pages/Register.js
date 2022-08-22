@@ -6,7 +6,7 @@ import { useState } from 'react';
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
  
     // const Auth = async (e) => {
     //     e.preventDefault();
