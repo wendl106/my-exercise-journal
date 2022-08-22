@@ -6,7 +6,7 @@ import { useState } from 'react';
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
  
     // const Auth = async (e) => {
     //     e.preventDefault();
@@ -15,7 +15,7 @@ const Register = () => {
     //             email: email,
     //             password: password
     //         });
-    //         navigate.push("/login");
+    //         navigate("/login");
     //     } catch (error) {
     //         const errorMessage = JSON.parse(error.request.response);
     //         console.log(errorMessage);
@@ -23,7 +23,7 @@ const Register = () => {
     //     }
     // }
 
-    const noAuth = () => {
+    const Auth = () => {
         alert("Sorry, we are not accepting new users at this time!");
     }
 
@@ -41,7 +41,7 @@ const Register = () => {
                 placeholder="Enter password"
                 onChange={e => setPassword(e.target.value)} />
             <button
-                onClick={noAuth}
+                onClick={Auth}
             >Register</button>
         </div>
     );

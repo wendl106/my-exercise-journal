@@ -18,6 +18,7 @@ db.once("open", () => {
  * Define the exercise Schemea
  */
 const exerciseSchema = mongoose.Schema({
+    user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     name: { type: String, required: true },
     sets: { type: Number, required: true },
     reps: { type: Number, required: true },
@@ -33,6 +34,7 @@ const userSchema = mongoose.Schema({
 });
 
 const exerciseTypeSchema = mongoose.Schema({
+    user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     name: { type: String, required: true },
 });
 

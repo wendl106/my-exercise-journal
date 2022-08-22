@@ -9,7 +9,7 @@ const About = () => {
             <ol>
                 <li><b>M</b>ongoDB is used as the database.</li>
                 <li><b>E</b>xpress is used as the web application framework.</li>
-                <li><b>R</b>est is used as the frontend client-side Javascript framework</li>
+                <li><b>R</b>eact is used as the frontend client-side Javascript framework</li>
                 <li><b>N</b>ode is used as the Javascript web server.</li>
             </ol>
             <p>

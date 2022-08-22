@@ -58,7 +58,7 @@ export const AddExercisePage = () => {
             < select
                 onChange={e => handleChange(e)}
                 >
-                <option value="" disabled>Exercise</option>
+                <option value="" selected disabled>Exercise</option>
                 {
                     Add.map((exerciseType, i) => <ExerciseTypeSelect exerciseType={exerciseType} key={i} />)
                 }
@@ -84,7 +84,7 @@ export const AddExercisePage = () => {
                 onChange={e => setWeight(e.target.value)} />
             <select
                 onChange={e => setUnit(e.target.value)}>
-                <option value="" disabled>Units</option>
+                <option value="" selected disabled>Units</option>
                 <option value="lbs">lbs</option>
                 <option value="kgs">kgs</option>
             </select>
